@@ -1,0 +1,160 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f8;
+    color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .app {
+    text-align: center;
+    max-width: 700px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #0077ff;
+  }
+  
+  .video-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #005edb;
+  }
+  
+  button.secondary {
+    background-color: #888;
+  }
+  
+  button.secondary:hover {
+    background-color: #666;
+  }
+  
+  button:active {
+    transform: scale(0.98);
+  }
+  
+  .mood-display {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .animated-text {
+    font-size: 24px;
+    animation: fadeInOut 4s ease-in-out;
+    color: #555;
+  }
+  
+  .animated-text.below-video {
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  .pulse {
+    font-size: 80px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .pulse.red {
+    color: #ff4444;
+  }
+  
+  .bounce {
+    font-size: 80px;
+    animation: bounce 1s ease infinite;
+  }
+  
+  .floaty {
+    font-size: 60px;
+    animation: floaty 2s ease-in-out infinite;
+  }
+
+  .disgusted-effect {
+    font-size: 80px;
+    animation: disgusted 2s ease-in-out infinite;
+    color: #60b64e;
+    position: relative;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes disgusted {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  canvas {
+    display: none;
+  }
+  
+  @media (max-width: 600px) {
+    .button-group {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    button {
+      width: 100%;
+      padding: 12px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
