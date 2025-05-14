@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import * as faceapi from 'face-api.js';
-import Confetti from 'react-confetti';
+import CameraControls from './components/CameraControls';
+import MoodDisplay from './components/MoodDisplay';
+import MoodEffects from './components/MoodEffects';
+import EmojiParade from './components/EmojiParade';
 
-const MoodDetector = () => {
+const App = () => {
   const [mood, setMood] = useState('');
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [effectVisible, setEffectVisible] = useState(false);
@@ -42,7 +45,7 @@ const MoodDetector = () => {
   const startCamera = () => setIsCameraOn(true);
 
   const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
+    if (videoRef.current?.srcObject) {
       videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
@@ -75,39 +78,15 @@ const MoodDetector = () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0);
-
-    // Draw mood text (badge)
     context.font = '40px Arial';
     context.fillStyle = 'white';
     context.fillText(mood.toUpperCase(), 20, 40);
 
-    // Save image as PNG
     const dataUrl = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = dataUrl;
     link.download = `mood-badge-selfie-${Date.now()}.png`;
     link.click();
-  };
-
-  const renderEffect = () => {
-    if (!effectVisible) return null;
-
-    switch (mood) {
-      case 'happy':
-        return <Confetti width={windowSize.width} height={windowSize.height} style={{ zIndex: 999 }} />;
-      case 'sad':
-        return <div className="animated-text below-video">🌧 It's okay to feel blue.</div>;
-      case 'angry':
-        return <div className="pulse red">🔥</div>;
-      case 'surprised':
-        return <div className="bounce">💥</div>;
-      case 'fearful':
-        return <div className="floaty">👻</div>;
-      case 'disgusted':
-        return <div className="disgusted-effect">🤢</div>;
-      default:
-        return null;
-    }
   };
 
   return (
@@ -120,26 +99,22 @@ const MoodDetector = () => {
         <>
           <div className="video-controls">
             <video ref={videoRef} autoPlay muted width="360" height="270" />
-            <div className="button-group">
-              <button onClick={analyzeMood}>Detect Mood</button>
-              <button className="secondary" onClick={stopCamera}>Reset</button>
-              <button onClick={captureSelfie}>Save Selfie</button>
-            </div>
+            <CameraControls
+              onDetect={analyzeMood}
+              onStop={stopCamera}
+              onCapture={captureSelfie}
+            />
           </div>
 
-          {mood && (
-            <div className="mood-display">
-              <p>Detected Mood: <strong>{mood}</strong></p>
-            </div>
-          )}
+          {mood && <MoodDisplay mood={mood} />}
+          {effectVisible && <EmojiParade mood={mood} />}
         </>
       )}
 
-      {renderEffect()}
-
+      <MoodEffects mood={mood} visible={effectVisible} windowSize={windowSize} />
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
     </div>
   );
 };
 
-export default MoodDetector;
+export default App;

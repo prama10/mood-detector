@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Prama Chakraborty",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,7 +15,8 @@
     "howler": "^2.2.4",
     "react": "^19.1.0",
     "react-confetti": "^6.4.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-use": "^17.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
