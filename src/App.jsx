@@ -5,6 +5,7 @@ import CameraControls from './components/CameraControls';
 import MoodDisplay from './components/MoodDisplay';
 import MoodEffects from './components/MoodEffects';
 import EmojiParade from './components/EmojiParade';
+import moodEmojis from './utils/moodEmojis';
 
 const App = () => {
   const [mood, setMood] = useState('');
@@ -64,7 +65,7 @@ const App = () => {
       const moodDetected = sorted[0].expression;
       setMood(moodDetected);
       setEffectVisible(true);
-      setTimeout(() => setEffectVisible(false), 5000);
+      setTimeout(() => setEffectVisible(false), 6000);
     } else {
       setMood('No face found');
       setEffectVisible(false);
@@ -78,9 +79,20 @@ const App = () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0);
-    context.font = '40px Arial';
-    context.fillStyle = 'white';
+
+    context.font = '40px Comic Sans MS';
+    context.fillStyle = 'rgba(255, 255, 255, 0.9)';
     context.fillText(mood.toUpperCase(), 20, 40);
+
+    // Add emoji stamp
+    context.font = '48px serif';
+    context.fillText('📸 ' + (moodEmojis[mood]?.[0] || '🤔'), canvas.width - 100, canvas.height - 30);
+
+    // Draw border
+    context.strokeStyle = 'white';
+    context.lineWidth = 20;
+    context.strokeRect(0, 0, canvas.width, canvas.height);
+
 
     const dataUrl = canvas.toDataURL('image/png');
     const link = document.createElement('a');
